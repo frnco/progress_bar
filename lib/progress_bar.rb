@@ -34,6 +34,15 @@ class ProgressBar
     end
   end
 
+  def update!(count = 1)
+    self.count = count
+    now = ::Time.now
+    if (now - @last_write) > 0.2 || self.count >= max
+      write
+      @last_write = now
+    end
+  end
+
   def write
     clear!
     print to_s
